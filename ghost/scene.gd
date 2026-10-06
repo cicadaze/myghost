@@ -12,13 +12,18 @@ var is_idling = false
 var is_dragging = false
 var drag_offset = Vector2()
 
+var hit_counter = 0 # relationship stats?
+
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var area = $Area2D
+@onready var body = $BodyArea
+@onready var head = $HeadArea
 
 func _ready() -> void:
 	screen_size = Vector2(DisplayServer.screen_get_size())
 	animated_sprite.play("walk")
-	area.input_event.connect(_on_area_input)
+	head.input_event.connect(_on_head_input)
+	body.input_event.connect(_on_body_input)
+	animated_sprite.animation_finished.connect(_on_animation_finished)
 	
 func _physics_process(delta: float) -> void:
 	if is_dragging:
@@ -56,7 +61,7 @@ func maybe_idle():
 			animated_sprite.play("idle")
 			speed = 0
 			
-func _on_area_input(_viewport, event, _shape_idx):
+func _on_body_input(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			is_dragging = true
@@ -67,3 +72,18 @@ func _on_area_input(_viewport, event, _shape_idx):
 		else:
 			is_dragging = false
 			animated_sprite.play("walk")
+			speed = 150
+			
+func _on_head_input(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and event.double_click:
+		if event.pressed:
+			hit_counter += 1
+			animated_sprite.play("ouch")
+			speed = 0
+		
+func _on_animation_finished():
+	if animated_sprite.animation == "ouch":
+		is_idling = false
+		animated_sprite.play("walk")
+		speed = 150
+		print("hit counter ", hit_counter)
