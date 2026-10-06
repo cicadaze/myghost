@@ -1,4 +1,5 @@
 extends Node2D
+# next steps: random flipping left/right, occasional idling random?, right click menu to close or pause, persistent memory, dizzy drop anim, dialogue box and lines
 
 var speed = 150
 var direction = Vector2(1, 0)
@@ -8,6 +9,8 @@ var window_size = Vector2(200, 200)
 
 var idle_timer = 0.0
 var is_idling = false
+
+var flip_timer = 4.0
 
 var is_dragging = false
 var drag_offset = Vector2()
@@ -38,9 +41,12 @@ func _physics_process(delta: float) -> void:
 			speed = 150
 			animated_sprite.play("walk")
 		return
+	flip_timer -= delta
+	if flip_timer <= 0:
+		flip_timer = randf_range(3.0, 8.0)
+		maybe_flip()
 	var window_position = Vector2(DisplayServer.window_get_position())
 	window_position += direction * speed * delta
-	print (window_position)
 	window_position.x = clamp(window_position.x, 0, screen_size.x - window_size.x)
 	window_position.y = clamp(window_position.y, 0, screen_size.y - window_size.y)
 	DisplayServer.window_set_position(Vector2i(window_position))
@@ -51,6 +57,8 @@ func _physics_process(delta: float) -> void:
 	if window_position.y <= 0 or window_position.y >= screen_size.y - window_size.y:
 		direction.y *= -1
 		maybe_idle()
+		
+
 		
 func maybe_idle():
 	if randf() < 0.4:
@@ -87,3 +95,9 @@ func _on_animation_finished():
 		animated_sprite.play("walk")
 		speed = 150
 		print("hit counter ", hit_counter)
+		
+func maybe_flip():
+	if animated_sprite.animation == "walk" and randf() < 0.4:
+			direction.x *= -1
+			animated_sprite.flip_h = !animated_sprite.flip_h
+			print("flipped")

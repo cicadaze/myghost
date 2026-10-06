@@ -200,7 +200,7 @@ script = ExtResource("1_nxogm")
 position = Vector2(100, 100)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_wgc2b")
-animation = &"ouch"
+animation = &"idle"
 
 [node name="HeadArea" type="Area2D" parent="." unique_id=1031811553]
 position = Vector2(100, 100)
