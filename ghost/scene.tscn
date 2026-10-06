@@ -3,6 +3,34 @@
 [ext_resource type="Script" uid="uid://dbjwdnpsxdq4o" path="res://scene.gd" id="1_nxogm"]
 [ext_resource type="Texture2D" uid="uid://bueqhs852mlut" path="res://16x32 All Animations-Sheet.png" id="2_3253y"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5juve"]
+atlas = ExtResource("2_3253y")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy5k1"]
+atlas = ExtResource("2_3253y")
+region = Rect2(32, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c1cw"]
+atlas = ExtResource("2_3253y")
+region = Rect2(64, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akxrc"]
+atlas = ExtResource("2_3253y")
+region = Rect2(96, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gu47o"]
+atlas = ExtResource("2_3253y")
+region = Rect2(128, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hm71"]
+atlas = ExtResource("2_3253y")
+region = Rect2(160, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_223my"]
+atlas = ExtResource("2_3253y")
+region = Rect2(192, 192, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nxogm"]
 atlas = ExtResource("2_3253y")
 region = Rect2(0, 130, 32, 31)
@@ -37,6 +65,32 @@ region = Rect2(352, 68, 32, 31)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wgc2b"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5juve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fy5k1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5c1cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akxrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gu47o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hm71")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_223my")
+}],
+"loop": 1,
+"name": &"dragged",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nxogm")
@@ -80,13 +134,13 @@ position = Vector2(100, 100)
 script = ExtResource("1_nxogm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=239495428]
-scale = Vector2(5, 5)
+scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_wgc2b")
-animation = &"idle"
-frame_progress = 0.5505558
+animation = &"dragged"
+frame_progress = 0.54610944
 
 [node name="Area2D" type="Area2D" parent="." unique_id=367269109]
-scale = Vector2(3, 3)
+scale = Vector2(4, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2050576493]
 shape = SubResource("RectangleShape2D_55re8")
