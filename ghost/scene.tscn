@@ -126,21 +126,21 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_55re8"]
-size = Vector2(45, 52)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nxogm"]
+size = Vector2(200, 200)
 
 [node name="Node2D" type="Node2D" unique_id=1695573197]
-position = Vector2(100, 100)
 script = ExtResource("1_nxogm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=239495428]
-scale = Vector2(8, 8)
+position = Vector2(100, 100)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_wgc2b")
 animation = &"dragged"
-frame_progress = 0.54610944
+frame_progress = 0.6367786
 
 [node name="Area2D" type="Area2D" parent="." unique_id=367269109]
-scale = Vector2(4, 4)
+position = Vector2(100, 100)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2050576493]
-shape = SubResource("RectangleShape2D_55re8")
+shape = SubResource("RectangleShape2D_nxogm")
