@@ -1,5 +1,5 @@
 extends Node2D
-# next steps: random flipping left/right, occasional idling random?, right click menu to close or pause, persistent memory, dizzy drop anim, dialogue box and lines
+# next steps: random flipping left/right, occasional idling random?, right click menu to close or pause or return to base or resume, persistent memory, dizzy drop anim, dialogue box and lines
 
 var speed = 150
 var direction = Vector2(1, 0)
@@ -11,6 +11,8 @@ var idle_timer = 0.0
 var is_idling = false
 
 var flip_timer = 4.0
+
+var ran_idle_timer = 6.0
 
 var is_dragging = false
 var drag_offset = Vector2()
@@ -45,6 +47,10 @@ func _physics_process(delta: float) -> void:
 	if flip_timer <= 0:
 		flip_timer = randf_range(3.0, 8.0)
 		maybe_flip()
+	ran_idle_timer -= delta
+	if ran_idle_timer <= 0:
+		ran_idle_timer = randf_range(5.0, 12.0)
+		maybe_idle()
 	var window_position = Vector2(DisplayServer.window_get_position())
 	window_position += direction * speed * delta
 	window_position.x = clamp(window_position.x, 0, screen_size.x - window_size.x)
@@ -61,13 +67,15 @@ func _physics_process(delta: float) -> void:
 
 		
 func maybe_idle():
-	if randf() < 0.4:
+	if randf() < 0.2:
 		is_idling = true
-		idle_timer = randf_range(1.0, 3.0)
-		var r = randi() % 3
-		if r == 0:
-			animated_sprite.play("idle")
-			speed = 0
+		idle_timer = randf_range(1.0, 6.0)
+		animated_sprite.play("idle")
+		speed = 0
+		# var r = randi() % 3
+		# if r == 0:
+			# animated_sprite.play("idle")
+			# speed = 0
 			
 func _on_body_input(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -100,4 +108,3 @@ func maybe_flip():
 	if animated_sprite.animation == "walk" and randf() < 0.4:
 			direction.x *= -1
 			animated_sprite.flip_h = !animated_sprite.flip_h
-			print("flipped")
