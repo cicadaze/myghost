@@ -1,7 +1,7 @@
 extends Node2D
 # next steps: random flipping left/right, occasional idling random?, right click menu to close or pause or return to base or resume, persistent memory, dizzy drop anim, dialogue box and lines
 
-var speed = 150
+var speed = 100
 var direction = Vector2(1, 0)
 
 var screen_size = Vector2()
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 		idle_timer -= delta
 		if idle_timer <= 0:
 			is_idling = false
-			speed = 150
+			speed = 100
 			animated_sprite.play("walk")
 		return
 	flip_timer -= delta
@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 func maybe_idle():
 	if randf() < 0.2:
 		is_idling = true
-		idle_timer = randf_range(1.0, 60.0)
+		idle_timer = randf_range(5.0, 360.0)
 		animated_sprite.play("idle")
 		speed = 0
 		# var r = randi() % 3
@@ -81,6 +81,7 @@ func _on_body_input(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			is_dragging = true
+			is_idling = false
 			var mouse_pos = Vector2(DisplayServer.mouse_get_position())
 			var win_pos = Vector2(DisplayServer.window_get_position())
 			drag_offset = mouse_pos - win_pos
@@ -88,7 +89,7 @@ func _on_body_input(_viewport, event, _shape_idx):
 		else:
 			is_dragging = false
 			animated_sprite.play("walk")
-			speed = 150
+			speed = 100
 			
 func _on_head_input(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and event.double_click:
@@ -101,7 +102,7 @@ func _on_animation_finished():
 	if animated_sprite.animation == "ouch":
 		is_idling = false
 		animated_sprite.play("walk")
-		speed = 150
+		speed = 100
 		print("hit counter ", hit_counter)
 		
 func maybe_flip():
