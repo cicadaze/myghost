@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 func maybe_idle():
 	if randf() < 0.2:
 		is_idling = true
-		idle_timer = randf_range(1.0, 6.0)
+		idle_timer = randf_range(1.0, 60.0)
 		animated_sprite.play("idle")
 		speed = 0
 		# var r = randi() % 3
